@@ -1,4 +1,4 @@
-# 🚖 Ride Booking Backend (Node.js)
+# 🚖 Ride Booking Backend (Documentation)
 
 A scalable backend system for a ride-booking platform that supports **User and Captain authentication**, **ride management**, and **map-based services**.
 The system is built with a focus on clean architecture, security, and real-world production practices.
@@ -21,14 +21,15 @@ The system is built with a focus on clean architecture, security, and real-world
 project-root
 │
 ├── controllers
+├── db
 ├── models
 ├── routes
 ├── middlewares
 ├── services
-├── utils
-├── config
+├── socket.js
 ├── app.js
 └── server.js
+
 ```
 
 **Architecture Pattern:**
