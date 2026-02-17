@@ -1,117 +1,143 @@
-# 🚗 Ride Booking Backend API
+# 🚖 Ride Booking Backend (Node.js)
 
-This backend provides authentication, captain management, ride services, and map utilities for a ride-booking application. All protected routes require a valid JWT token.
-
----
-
-## Base URL
-
-```
-http://localhost:<PORT>
-```
+A scalable backend system for a ride-booking platform that supports **User and Captain authentication**, **ride management**, and **map-based services**.
+The system is built with a focus on clean architecture, security, and real-world production practices.
 
 ---
 
-## Authentication
+## 🔧 Tech Stack
 
-Protected routes require the following header:
+* Node.js
+* Express.js
+* MongoDB + Mongoose
+* JWT Authentication
+* REST APIs
+
+---
+
+## 📁 Project Structure
+
+```
+project-root
+│
+├── controllers
+├── models
+├── routes
+├── middlewares
+├── services
+├── utils
+├── config
+├── app.js
+└── server.js
+```
+
+**Architecture Pattern:**
+Controller → Service → Model
+
+---
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root:
+
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection
+JWT_SECRET=your_secret_key
+GOOGLE_MAPS_API_KEY=your_maps_key
+```
+
+---
+
+## 🚀 How to Run Locally
+
+```bash
+# Clone repository
+git clone <repo-url>
+
+# Install dependencies
+npm install
+
+# Run server
+npm start
+```
+
+Server will run at:
+
+```
+http://localhost:5000
+```
+
+---
+
+# 🔐 Authentication
+
+Protected routes require:
 
 ```
 Authorization: Bearer <token>
 ```
 
+Tokens are blacklisted on logout.
+
 ---
 
-# User APIs
+# 👤 User APIs
 
-## 1. Register User
+### Register
 
-**POST** `/users/register`
+`POST /users/register`
 
-Creates a new user account.
-
-### Request Body
+Request:
 
 ```json
 {
   "fullname": {
     "firstname": "Soumya",
-    "lastname": "Madishetti"
+    "lastname": "M"
   },
-  "email": "soumya@example.com",
+  "email": "user@example.com",
   "password": "123456"
 }
 ```
 
-### Response
+Response:
 
-```json
-{
-  "user": {
-    "fullname": {
-      "firstname": "Soumya",
-      "lastname": "Madishetti"
-    },
-    "email": "soumya@example.com"
-  },
-  "token": "JWT_TOKEN"
-}
-```
+* User object
+* JWT Token
 
 ---
 
-## 2. Login User
+### Login
 
-**POST** `/users/login`
-
-Authenticates user and returns JWT token.
-
-### Request Body
-
-```json
-{
-  "email": "soumya@example.com",
-  "password": "123456"
-}
-```
+`POST /users/login`
 
 ---
 
-## 3. Get User Profile
+### Profile
 
-**GET** `/users/profile`
-Requires authentication.
-
-Returns current logged-in user details.
+`GET /users/profile`
 
 ---
 
-## 4. Logout User
+### Logout
 
-**GET** `/users/logout`
-Requires authentication.
-
-Invalidates the current session token.
+`GET /users/logout`
 
 ---
 
-# Captain APIs
+# 🚗 Captain APIs
 
-## 1. Register Captain
+### Register
 
-**POST** `/captains/register`
-
-Creates a captain account with vehicle details.
-
-### Request Body
+`POST /captains/register`
 
 ```json
 {
   "fullname": {
-    "firstname": "Ravi",
-    "lastname": "Kumar"
+    "firstname": "Raj"
   },
-  "email": "ravi@example.com",
+  "email": "captain@example.com",
   "password": "123456",
   "vehicle": {
     "color": "White",
@@ -122,181 +148,130 @@ Creates a captain account with vehicle details.
 }
 ```
 
-### Response
+---
+
+### Login
+
+`POST /captains/login`
+
+---
+
+### Profile
+
+`GET /captains/profile`
+
+---
+
+### Logout
+
+`GET /captains/logout`
+
+---
+
+# 🗺️ Maps APIs
+
+### Get Coordinates
+
+`GET /maps/get-coordinates?address=<address>`
+
+Returns latitude and longitude.
+
+---
+
+### Get Distance & Duration
+
+`GET /maps/get-distance-time?origin=<origin>&destination=<destination>`
+
+---
+
+### Get Suggestions
+
+`GET /maps/get-suggestions?input=<text>`
+
+---
+
+# 🚕 Ride APIs
+
+### Create Ride
+
+`POST /rides/create`
+
+Request:
 
 ```json
 {
-  "captain": {
-    "fullname": {
-      "firstname": "Ravi",
-      "lastname": "Kumar"
-    },
-    "email": "ravi@example.com",
-    "vehicle": {
-      "color": "White",
-      "plate": "TS09AB1234",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  },
-  "token": "JWT_TOKEN"
-}
-```
-
----
-
-## 2. Login Captain
-
-**POST** `/captains/login`
-
-Authenticates captain and returns JWT token.
-
----
-
-## 3. Captain Profile
-
-**GET** `/captains/profile`
-Requires authentication.
-
-Returns captain profile details.
-
----
-
-## 4. Logout Captain
-
-**GET** `/captains/logout`
-Requires authentication.
-
-Returns:
-
-```json
-{
-  "message": "Logout successful"
-}
-```
-
----
-
-# Maps APIs
-
-## 1. Get Coordinates
-
-**GET**
-`/maps/get-coordinates?address=<address>`
-
-Returns latitude and longitude for a given address.
-
-### Response
-
-```json
-{
-  "lat": 17.3850,
-  "lng": 78.4867
-}
-```
-
----
-
-## 2. Get Distance and Duration
-
-**GET**
-`/maps/get-distance-time?origin=<origin>&destination=<destination>`
-
-Returns travel distance and estimated time.
-
----
-
-## 3. Location Suggestions
-
-**GET**
-`/maps/get-suggestions?input=<text>`
-
-Returns autocomplete location suggestions.
-
----
-
-# Ride APIs
-
-## 1. Create Ride
-
-**POST** `/rides/create`
-Requires authentication.
-
-### Request Body
-
-```json
-{
-  "pickup": "Hitech City",
-  "destination": "Secunderabad",
+  "pickup": "Madhapur",
+  "destination": "Gachibowli",
   "vehicleType": "car"
 }
 ```
 
-### Response
+Response:
 
-```json
-{
-  "ride": {
-    "pickup": "Hitech City",
-    "destination": "Secunderabad",
-    "fare": 120,
-    "status": "pending",
-    "distance": 5000,
-    "duration": 900,
-    "otp": "4321"
-  }
-}
-```
+* Fare calculation
+* Distance & duration
+* Ride status
+* OTP for ride verification
 
 ---
 
-## 2. Get Fare Estimate
+### Get Fare Estimate
 
-**GET**
-`/rides/get-fare?pickup=<pickup>&destination=<destination>`
+`GET /rides/get-fare?pickup=<pickup>&destination=<destination>`
 
-### Response
+Response:
 
 ```json
 {
-  "auto": 60,
-  "car": 100,
+  "auto": 50,
+  "car": 80,
   "moto": 40
 }
 ```
 
 ---
 
-# Error Handling
+# 🛡️ Security Features
 
-| Status Code | Description                   |
-| ----------- | ----------------------------- |
-| 400         | Invalid or missing parameters |
-| 401         | Unauthorized / Invalid token  |
-| 404         | Resource not found            |
-| 500         | Internal server error         |
-
----
-
-# Validation Rules
-
-* First name must be at least **3 characters**
-* Password must be at least **6 characters**
-* Vehicle capacity must be **minimum 1**
-* Supported vehicle types: `car`, `auto`, `motorcycle`
+* JWT based authentication
+* Password hashing (bcrypt)
+* Token blacklisting on logout
+* Input validation
+* Role-based access control
 
 ---
 
-# Tech Stack
+# 📊 Key Features
 
-* Node.js
-* Express.js
-* MongoDB
-* JWT Authentication
-* Map Service API (Google Maps or similar)
+* User & Captain role system
+* Real-time fare calculation
+* Map integration (coordinates, distance, autocomplete)
+* Ride creation with OTP verification
+* Clean scalable architecture
 
 ---
 
-# Author
+# 🧪 API Testing
 
-Soumya Madishetti
+You can test APIs using:
+
+* Postman
+* Thunder Client
+
+---
+
+# 📌 Future Improvements
+
+* Real-time ride tracking (Socket.io)
+* Payment integration
+* Ride history & analytics
+* Admin dashboard
+* Docker deployment
+
+---
+
+# 👨‍💻 Author
+
+**Soumya Madishetti**
+MERN Stack Developer
+Backend | System Design | API Development
