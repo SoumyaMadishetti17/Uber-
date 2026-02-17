@@ -43,7 +43,10 @@ project-root
 ├── services
 ├── socket.js
 ├── app.js
+├── package.json
+├── package-lock.json
 └── server.js
+
 
 ```
 
