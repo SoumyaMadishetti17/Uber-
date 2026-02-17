@@ -1,17 +1,32 @@
-# 🚖 Ride Booking Backend (Node.js)
+# 🚖 Ride Booking Backend (Documentation)
 
 A scalable backend system for a ride-booking platform that supports **User and Captain authentication**, **ride management**, and **map-based services**.
 The system is built with a focus on clean architecture, security, and real-world production practices.
 
 ---
 
-## 🔧 Tech Stack
+## Tech Stack & Dependencies
 
-* Node.js
-* Express.js
-* MongoDB + Mongoose
-* JWT Authentication
-* REST APIs
+### Core Technologies
+- Node.js
+- Express.js
+- MongoDB (Mongoose)
+- JWT Authentication
+
+### Main Dependencies
+
+| Package | Purpose |
+|---------|---------|
+| express | Backend framework |
+| mongoose | MongoDB object modeling |
+| jsonwebtoken | JWT authentication |
+| bcrypt | Password hashing |
+| express-validator | Request validation |
+| dotenv | Environment variable management |
+| cors | Cross-origin resource sharing |
+| cookie-parser | Cookie handling |
+| axios | External API requests (Maps integration) |
+
 
 ---
 
@@ -21,14 +36,18 @@ The system is built with a focus on clean architecture, security, and real-world
 project-root
 │
 ├── controllers
+├── db
 ├── models
 ├── routes
 ├── middlewares
 ├── services
-├── utils
-├── config
+├── socket.js
 ├── app.js
+├── package.json
+├── package-lock.json
 └── server.js
+
+
 ```
 
 **Architecture Pattern:**
@@ -53,7 +72,7 @@ GOOGLE_MAPS_API_KEY=your_maps_key
 
 ```bash
 # Clone repository
-git clone <repo-url>
+git clone https://github.com/SoumyaMadishetti17/Uber-.git
 
 # Install dependencies
 npm install
