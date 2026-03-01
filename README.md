@@ -217,8 +217,8 @@ Uber-Clone/
 ### 1. Clone Repository
 
 ```
-git clone https://github.com/your-username/uber-clone.git
-cd uber-clone
+git clone https://github.com/SoumyaMadishetti17/Uber-.git
+cd Uber
 ```
 
 ---
